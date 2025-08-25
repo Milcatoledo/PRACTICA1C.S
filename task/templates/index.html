@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<main class="container py-5">
+    <section class="card card-body mx-auto w-50">
+        <h1 class="display-1 text-center">Django To-Do List</h1>    
+    
+        <div class="text-center mb-4">
+            <img src="{% static 'task/images/todoist.jpg'%}"  class="img-fluid rounded-circle " alt="Todo List" width="300" alt="To-Do List">
+        </div>
+    
+        <p class="lead text-justify">La lista de tareas pendientes en este proyecto de Django te permitirá mantener un registro de todas las tareas que necesitas completar. Puedes agregar nuevas tareas, marcar las que ya hayas completado y eliminar las que ya no son relevantes. Con esta herramienta de productividad, podrás mantener el control de tus tareas de manera eficiente y efectiva.</p>
+    
+        <div class="text-center">  
+            <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+            <a class="btn btn-secondary" href="{% url 'signup' %}">Signup</a>
+        </div>
+    </section>
+</main>
+
+
+{% endblock %}
+
