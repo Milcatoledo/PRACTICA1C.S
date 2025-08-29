@@ -1,0 +1,39 @@
+name: generar release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Generate changelog
+        run: |
+          echo "## Changelog for ${{ github.ref_name }}" > CHANGELOG.md
+          echo "" >> CHANGELOG.md
+          git log -1 --pretty=format:"- %s" >> CHANGELOG.md
+
+      - name: Create release archive
+        run: |
+          mkdir release
+          cp -r src/* release/
+          tar -czf release-${{ github.ref_name }}.tar.gz release
+          zip -r release-${{ github.ref_name }}.zip release
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Release ${{ github.ref_name }}"
+          tag_name: ${{ github.ref_name }}
+          body_path: CHANGELOG.md
+          files: |
+            release-${{ github.ref_name }}.tar.gz
+            release-${{ github.ref_name }}.zip
