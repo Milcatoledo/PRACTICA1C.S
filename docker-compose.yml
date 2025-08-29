@@ -1,16 +1,16 @@
 services:
   practica1cs:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: mcr.microsoft.com/dotnet/aspnet:8.0 # Usa la imagen oficial de ASP.NET 8.0 (puedes cambiar la versión si es necesario)
     container_name: practica1cs_app
     ports:
       - "8000:8000"
     volumes:
       - .:/app
+    working_dir: /app
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+    command: >
+      bash -c "dotnet restore && dotnet build && dotnet run --urls=http://0.0.0.0:8000"
     restart: unless-stopped
 
-# Asegúrate de tener un Dockerfile en la raíz del proyecto para que funcione el build.
-
+# Este compose ya no requiere Dockerfile, solo asegúrate de tener tu proyecto .csproj en la raíz del repo.
