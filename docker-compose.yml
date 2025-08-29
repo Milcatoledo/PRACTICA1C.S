@@ -1,6 +1,6 @@
 services:
   practica1cs:
-    image: mcr.microsoft.com/dotnet/aspnet:8.0 # Usa la imagen oficial de ASP.NET 8.0 (puedes cambiar la versión si es necesario)
+    image: mcr.microsoft.com/dotnet/aspnet:8.0 
     container_name: practica1cs_app
     ports:
       - "8000:8000"
@@ -13,4 +13,4 @@ services:
       bash -c "dotnet restore && dotnet build && dotnet run --urls=http://0.0.0.0:8000"
     restart: unless-stopped
 
-# Este compose ya no requiere Dockerfile, solo asegúrate de tener tu proyecto .csproj en la raíz del repo.
+
