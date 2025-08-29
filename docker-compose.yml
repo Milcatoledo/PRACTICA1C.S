@@ -1,26 +1,17 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  web:
-    build: ./src
-    command: |
-      bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8000'
-    volumes:
-      - ./src/:/usr/src/app/
+  practica1cs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: practica1cs_app
     ports:
-      - 8002:8000
-    environment:
-      - DATABASE_URL=postgresql://postgres:postgres@localhost/postgres
-  db:
-    image: postgres:15.1-alpine
+      - "8000:8000"
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    expose:
-      - 5432
+      - .:/app
     environment:
-      - POSTGRES_USER=hello_fastapi
-      - POSTGRES_PASSWORD=hello_fastapi
-      - POSTGRES_DB=hello_fastapi_dev
+      - ASPNETCORE_ENVIRONMENT=Development
+    restart: unless-stopped
 
-volumes:
-  postgres_data:
+# Asegúrate de tener un Dockerfile en la raíz del proyecto para que funcione el build.
